@@ -1,6 +1,12 @@
-import { ConflictException, HttpException, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  HttpException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma/prisma.service';
 import { CreateCategoryDto } from './dto/create-category.dto';
+import { prismaErrorCodes } from 'src/utils/prisma-error-codes';
 
 @Injectable()
 export class CategoriesService {
@@ -14,16 +20,28 @@ export class CategoriesService {
   }
 
   async create(data: CreateCategoryDto) {
-    const confilctErrorCode = 'P2002';
-
     //I decided to carry out the validation this way, as fewer requests are made to the database
     try {
       return await this.prismaService.categories.create({
         data,
       });
     } catch (error) {
-      if (error.code === confilctErrorCode) {
+      if (error.code === prismaErrorCodes.conflict) {
         throw new ConflictException('Category already exists');
+      }
+      throw error;
+    }
+  }
+
+  async update(id: number, data: CreateCategoryDto) {
+    try {
+      return await this.prismaService.categories.update({
+        where: { id },
+        data,
+      });
+    } catch (error) {
+      if (error.code === prismaErrorCodes.notFound) {
+        throw new NotFoundException('Category not found');
       }
       throw error;
     }
