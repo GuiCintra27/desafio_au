@@ -1,6 +1,7 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
   HttpCode,
   HttpException,
@@ -60,6 +61,27 @@ export class CategoriesController {
   ): Promise<void> {
     try {
       await this.categoriesService.update(id, CreateCategoryDto);
+    } catch (error) {
+      if (error instanceof HttpException) {
+        throw error;
+      }
+      throw new Error(error);
+    }
+  }
+
+  @Delete('/:id')
+  @HttpCode(204)
+  async delete(
+    @Param(
+      new ValidationPipe({
+        transform: true,
+        transformOptions: { enableImplicitConversion: true },
+      }),
+    )
+    { id }: ParamUpdateCategoryDto,
+  ): Promise<void> {
+    try {
+      await this.categoriesService.delete(id);
     } catch (error) {
       if (error instanceof HttpException) {
         throw error;
