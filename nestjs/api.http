@@ -1,0 +1,38 @@
+GET http://localhost:3001/categories
+
+###
+POST http://localhost:3001/categories
+Content-Type: application/json
+
+{
+    "name": "Doces",
+    "image_url": "https://img77.uenicdn.com/image/upload/v1571152283/service_images/shutterstock_792219154.jpg",
+    "day_shift": "ALL"
+}
+
+
+###
+GET http://localhost:3000/bank-accounts/{{bank_acount_id}}/pix-keys
+
+###
+POST http://localhost:3000/bank-accounts/{{bank_acount_id}}/pix-keys
+Content-Type: application/json
+
+{
+    "kind": "email",
+    "key": "user1@email.com"
+}
+
+###
+GET http://localhost:3000/bank-accounts/{{bank_acount_id}}/transactions
+
+### Create a new transaction
+POST http://localhost:3000/bank-accounts/{{bank_acount_id}}/transactions
+Content-Type: application/json
+
+{
+    "pix_key_key": "user1@email.com",
+    "pix_key_kind": "email",
+    "description": "My transaction",
+    "amount": 10.00
+}

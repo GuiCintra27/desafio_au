@@ -1,5 +1,5 @@
 // prisma/seed.ts
-import { Category, Prisma, PrismaClient, Product } from '@prisma/client';
+import { Categories, Prisma, PrismaClient, Products } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
@@ -15,12 +15,12 @@ function generateRandomValue(min: number, max: number): number {
 
 export async function seed(): Promise<void> {
   try {
-    let category: Category[] | Prisma.BatchPayload =
-      await prisma.category.findMany();
-    const product: Product[] = await prisma.product.findMany();
+    let category: Categories[] | Prisma.BatchPayload =
+      await prisma.categories.findMany();
+    const product: Products[] = await prisma.products.findMany();
 
     if (category.length === 0) {
-      category = await prisma.category.createMany({
+      category = await prisma.categories.createMany({
         data: [
           {
             name: 'Combo',
@@ -47,7 +47,7 @@ export async function seed(): Promise<void> {
     }
 
     if (product.length === 0) {
-      const products: Omit<Product, 'id' | 'created_at' | 'updated_at'>[] = [];
+      const products: Omit<Products, 'id' | 'created_at' | 'updated_at'>[] = [];
 
       for (let i = 0; i < 20; i += 1) {
         const price = generateRandomValue(15, 100);
@@ -64,7 +64,7 @@ export async function seed(): Promise<void> {
         });
       }
 
-      await prisma.product.createMany({
+      await prisma.products.createMany({
         data: products,
       });
     }

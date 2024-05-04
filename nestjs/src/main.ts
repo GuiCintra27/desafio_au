@@ -7,7 +7,12 @@ async function bootstrap() {
   const PORT = process.env.PORT || 3000;
 
   app.enableShutdownHooks();
-  app.useGlobalPipes(new ValidationPipe());
+  app.useGlobalPipes(
+    new ValidationPipe({
+      transform: true,
+      errorHttpStatusCode: 422,
+    }),
+  );
 
   await app.listen(PORT);
 
