@@ -3,14 +3,16 @@ import { PrismaService } from 'src/prisma/prisma/prisma.service';
 import { CategoriesController } from './categories.controller';
 import { CategoriesService } from './categories.service';
 import { mockCategoriesService } from './mocks/categories.mock';
+import { CategoriesFactory } from './factory/categories.factory';
 
 describe('CategoriesController', () => {
   let controller: CategoriesController;
+  const categoriesFactory = new CategoriesFactory();
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
       controllers: [CategoriesController],
-      providers: [CategoriesService, PrismaService],
+      providers: [PrismaService, CategoriesService],
     })
       .overrideProvider(CategoriesService)
       .useValue(mockCategoriesService)
@@ -32,6 +34,45 @@ describe('CategoriesController', () => {
     it('should return an array', async () => {
       const result = await controller.findAll();
       expect(result).toBeInstanceOf(Array);
+    });
+  });
+
+  describe('When calling create', () => {
+    it('should call categoriesService create', async () => {
+      await controller.create(categoriesFactory.create(1)[0]);
+      expect(mockCategoriesService.create).toHaveBeenCalled();
+    });
+
+    it('should return an object', async () => {
+      const result = await controller.create(categoriesFactory.create(1)[0]);
+      expect(result).toBeInstanceOf(Object);
+    });
+  });
+
+  describe('When calling update', () => {
+    it('should call categoriesService update', async () => {
+      await controller.update({ id: 1 }, categoriesFactory.create(1)[0]);
+      expect(mockCategoriesService.update).toHaveBeenCalled();
+    });
+
+    it('should return undefined', async () => {
+      const result = await controller.update(
+        { id: 1 },
+        categoriesFactory.create(1)[0],
+      );
+      expect(result).toBeUndefined();
+    });
+  });
+
+  describe('When calling delete', () => {
+    it('should call categoriesService delete', async () => {
+      const result = await controller.delete({ id: 1 });
+      expect(mockCategoriesService.delete).toHaveBeenCalled();
+    });
+
+    it('should return undefined', async () => {
+      const result = await controller.delete({ id: 1 });
+      expect(result).toBeUndefined();
     });
   });
 });
