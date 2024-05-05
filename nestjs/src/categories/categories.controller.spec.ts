@@ -39,26 +39,26 @@ describe('CategoriesController', () => {
 
   describe('When calling create', () => {
     it('should call categoriesService create', async () => {
-      await controller.create(categoriesFactory.create(1)[0]);
+      await controller.create(categoriesFactory.createDTO(1)[0]);
       expect(mockCategoriesService.create).toHaveBeenCalled();
     });
 
     it('should return an object', async () => {
-      const result = await controller.create(categoriesFactory.create(1)[0]);
+      const result = await controller.create(categoriesFactory.createDTO(1)[0]);
       expect(result).toBeInstanceOf(Object);
     });
   });
 
   describe('When calling update', () => {
     it('should call categoriesService update', async () => {
-      await controller.update({ id: 1 }, categoriesFactory.create(1)[0]);
+      await controller.update({ id: 1 }, categoriesFactory.createDTO(1)[0]);
       expect(mockCategoriesService.update).toHaveBeenCalled();
     });
 
     it('should return undefined', async () => {
       const result = await controller.update(
         { id: 1 },
-        categoriesFactory.create(1)[0],
+        categoriesFactory.createDTO(1)[0],
       );
       expect(result).toBeUndefined();
     });
