@@ -1,5 +1,7 @@
 @port=3001
 
+### CATEGORIES ###
+
 GET http://localhost:{{port}}/categories
 
 ###
@@ -26,3 +28,24 @@ Content-Type: application/json
 
 ###
 DELETE http://localhost:{{port}}/categories/{{category_id}}
+
+
+
+### PRODUCTS ###
+
+@name='smash da casa'
+@product_id=1
+
+GET http://localhost:{{port}}/products
+
+###
+GET http://localhost:{{port}}/products?category_id={{category_id}}
+
+###
+GET http://localhost:{{port}}/products?name={{name}}
+
+###
+GET http://localhost:{{port}}/products?category_id={{category_id}}&name={{name}}
+
+###
+GET http://localhost:{{port}}/products/5
