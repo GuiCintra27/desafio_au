@@ -1,7 +1,13 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma/prisma.service';
 import { ProductsData } from './models/products.model';
 import { prismaErrorCodes } from 'src/utils/prisma-error-codes';
+import { CreateProductsDto } from './dto/create-products.dto';
+import { Products } from '@prisma/client';
 
 @Injectable()
 export class ProductsService {
@@ -121,5 +127,52 @@ export class ProductsService {
     });
 
     return products;
+  }
+
+  async create(data: CreateProductsDto): Promise<Products> {
+    //I decided to carry out the validation this way, as fewer requests are made to the database
+    try {
+      return await this.prismaService.products.create({
+        data,
+      });
+    } catch (error) {
+      if (error.code === prismaErrorCodes.conflict) {
+        throw new ConflictException('Product already exists');
+      }
+      throw error;
+    }
+  }
+
+  async update(id: number, data: CreateProductsDto): Promise<void> {
+    try {
+      await this.prismaService.products.update({
+        where: { id },
+        data,
+      });
+    } catch (error) {
+      if (error.code === prismaErrorCodes.notFound) {
+        throw new NotFoundException('Category not found');
+      }
+
+      if (error.code === prismaErrorCodes.conflict) {
+        throw new ConflictException('Product already exists');
+      }
+
+      throw error;
+    }
+  }
+
+  async delete(id: number): Promise<void> {
+    try {
+      await this.prismaService.products.delete({
+        where: { id },
+      });
+    } catch (error) {
+      if (error.code === prismaErrorCodes.notFound) {
+        throw new NotFoundException('Product not found');
+      }
+
+      throw error;
+    }
   }
 }

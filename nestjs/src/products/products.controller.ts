@@ -1,8 +1,13 @@
 import {
+  Body,
   Controller,
+  Delete,
   Get,
+  HttpCode,
   HttpException,
   Param,
+  Post,
+  Put,
   Query,
   ValidationPipe,
 } from '@nestjs/common';
@@ -11,6 +16,7 @@ import { ProductsParamsDto } from './dto/products-params.dto';
 import { ProductsQueryDto } from './dto/products-query.dto';
 import { ProductsService } from './products.service';
 import { ProductsData } from './models/products.model';
+import { CreateProductsDto } from './dto/create-products.dto';
 
 @Controller('products')
 export class ProductsController {
@@ -62,6 +68,67 @@ export class ProductsController {
     try {
       const product = await this.productsService.findById({ id });
       return product;
+    } catch (error) {
+      if (error instanceof HttpException) {
+        throw error;
+      }
+      throw new Error(error);
+    }
+  }
+
+  @Post('/')
+  @HttpCode(201)
+  async create(
+    @Body()
+    CreateCategoryDto: CreateProductsDto,
+  ): Promise<Products> {
+    try {
+      const category = await this.productsService.create(CreateCategoryDto);
+      return category;
+    } catch (error) {
+      if (error instanceof HttpException) {
+        throw error;
+      }
+      throw new Error(error);
+    }
+  }
+
+  @Put('/:id')
+  @HttpCode(204)
+  async update(
+    @Param(
+      new ValidationPipe({
+        transform: true,
+        transformOptions: { enableImplicitConversion: true },
+      }),
+    )
+    { id }: ProductsParamsDto,
+    @Body()
+    CreateCategoryDto: CreateProductsDto,
+  ): Promise<void> {
+    try {
+      await this.productsService.update(id, CreateCategoryDto);
+    } catch (error) {
+      if (error instanceof HttpException) {
+        throw error;
+      }
+      throw new Error(error);
+    }
+  }
+
+  @Delete('/:id')
+  @HttpCode(204)
+  async delete(
+    @Param(
+      new ValidationPipe({
+        transform: true,
+        transformOptions: { enableImplicitConversion: true },
+      }),
+    )
+    { id }: ProductsParamsDto,
+  ): Promise<void> {
+    try {
+      await this.productsService.delete(id);
     } catch (error) {
       if (error instanceof HttpException) {
         throw error;
