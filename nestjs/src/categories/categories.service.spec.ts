@@ -36,6 +36,7 @@ describe('CategoriesService', () => {
   });
 
   afterAll(async () => {
+    await cleanDB();
     await prismaService.$disconnect();
   });
 

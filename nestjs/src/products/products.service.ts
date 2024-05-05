@@ -151,7 +151,7 @@ export class ProductsService {
       });
     } catch (error) {
       if (error.code === prismaErrorCodes.notFound) {
-        throw new NotFoundException('Category not found');
+        throw new NotFoundException('Product not found');
       }
 
       if (error.code === prismaErrorCodes.conflict) {

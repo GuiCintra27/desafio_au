@@ -10,11 +10,10 @@ export class ProductsFactory {
     private categoriesFactory?: CategoriesFactory,
   ) {}
 
-  public createDTO(quantity: number): ProductsData[] {
-    const products: ProductsData[] = [];
+  public createDTO(quantity: number): Omit<ProductsData, 'id'>[] {
+    const products: Omit<ProductsData, 'id'>[] = [];
     for (let i = 0; i < quantity; i += 1) {
       products.push({
-        id: i,
         name: faker.person.firstName(),
         description: faker.lorem.sentence(),
         price: faker.number.float({ fractionDigits: 2 }),
