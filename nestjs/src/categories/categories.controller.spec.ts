@@ -3,7 +3,7 @@ import { PrismaService } from 'src/prisma/prisma/prisma.service';
 import { CategoriesController } from './categories.controller';
 import { CategoriesService } from './categories.service';
 import { mockCategoriesService } from './mocks/categories.mock';
-import { CategoriesFactory } from './factory/categories.factory';
+import { CategoriesFactory } from './factorires/categories.factory';
 
 describe('CategoriesController', () => {
   let controller: CategoriesController;

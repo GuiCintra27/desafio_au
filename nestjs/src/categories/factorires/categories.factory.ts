@@ -38,4 +38,16 @@ export class CategoriesFactory {
       data: category[0],
     });
   }
+
+  async findMany(): Promise<Omit<Categories, 'created_at' | 'updated_at'>[]> {
+    const categories = await this.prismaService.categories.findMany({
+      select: {
+        id: true,
+        name: true,
+        image_url: true,
+        day_shift: true,
+      },
+    });
+    return categories;
+  }
 }

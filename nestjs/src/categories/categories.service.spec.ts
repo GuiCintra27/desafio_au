@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { PrismaService } from 'src/prisma/prisma/prisma.service';
 import { prismaService } from 'src/utils/prisma-service-test';
 import { CategoriesService } from './categories.service';
-import { CategoriesFactory } from './factory/categories.factory';
+import { CategoriesFactory } from './factorires/categories.factory';
 import { cleanDB } from 'src/utils/clean-db';
 import { ConfigModule } from '@nestjs/config';
 import { CreateCategoryDto } from './dto/create-category.dto';
@@ -31,6 +31,7 @@ describe('CategoriesService', () => {
       ],
     }).compile();
 
+    await cleanDB();
     service = module.get<CategoriesService>(CategoriesService);
   });
 
