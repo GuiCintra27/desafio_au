@@ -66,7 +66,7 @@ describe('CategoriesController', () => {
 
   describe('When calling delete', () => {
     it('should call categoriesService delete', async () => {
-      const result = await controller.delete({ id: 1 });
+      await controller.delete({ id: 1 });
       expect(mockCategoriesService.delete).toHaveBeenCalled();
     });
 

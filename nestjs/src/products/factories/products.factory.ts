@@ -6,9 +6,25 @@ import { ProductsData } from '../models/products.model';
 
 export class ProductsFactory {
   constructor(
-    private readonly prismaService: PrismaService,
-    private categoriesFactory: CategoriesFactory,
+    private readonly prismaService?: PrismaService,
+    private categoriesFactory?: CategoriesFactory,
   ) {}
+
+  public createDTO(quantity: number): ProductsData[] {
+    const products: ProductsData[] = [];
+    for (let i = 0; i < quantity; i += 1) {
+      products.push({
+        id: i,
+        name: faker.person.firstName(),
+        description: faker.lorem.sentence(),
+        price: faker.number.float({ fractionDigits: 2 }),
+        category_id: faker.number.int(),
+        image_url: faker.image.url(),
+        day_shift: faker.helpers.arrayElement(['ALL', 'DAY', 'NIGHT']),
+      });
+    }
+    return products;
+  }
 
   public async createMany({
     quantity,

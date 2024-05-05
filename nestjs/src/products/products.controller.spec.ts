@@ -2,9 +2,11 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { mockProductsService } from './mocks/products-service.mock';
 import { ProductsController } from './products.controller';
 import { ProductsService } from './products.service';
+import { ProductsFactory } from './factories/products.factory';
 
 describe('ProductsController', () => {
   let controller: ProductsController;
+  const factory = new ProductsFactory();
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -85,9 +87,48 @@ describe('ProductsController', () => {
       expect(mockProductsService.findById).toHaveBeenCalled();
     });
 
-    it('if id is given, it should return an object', () => {
-      const result = controller.findOne({ id: 1 });
+    it('if id is given, it should return an object', async () => {
+      const result = await controller.findOne({ id: 1 });
       expect(result).toBeInstanceOf(Object);
+    });
+  });
+
+  describe('When calling create', () => {
+    it('should call productsService create', () => {
+      controller.create(factory.createDTO(1)[0]);
+      expect(mockProductsService.create).toHaveBeenCalled();
+    });
+
+    it('should return an object', async () => {
+      const result = await controller.create(factory.createDTO(1)[0]);
+      expect(result).toBeInstanceOf(Object);
+    });
+  });
+
+  describe('When calling update', () => {
+    it('should call productsService update', () => {
+      controller.update({ id: 1 }, factory.createDTO(1)[0]);
+      expect(mockProductsService.update).toHaveBeenCalled();
+    });
+
+    it('should return undefined', async () => {
+      const result = await controller.update(
+        { id: 1 },
+        factory.createDTO(1)[0],
+      );
+      expect(result).toBeUndefined();
+    });
+  });
+
+  describe('When calling delete', () => {
+    it('should call productsService delete', () => {
+      controller.delete({ id: 1 });
+      expect(mockProductsService.delete).toHaveBeenCalled();
+    });
+
+    it('should return undefined', async () => {
+      const result = await controller.delete({ id: 1 });
+      expect(result).toBeUndefined();
     });
   });
 });
