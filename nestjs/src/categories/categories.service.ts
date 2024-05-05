@@ -44,6 +44,11 @@ export class CategoriesService {
       if (error.code === prismaErrorCodes.notFound) {
         throw new NotFoundException('Category not found');
       }
+
+      if (error.code === prismaErrorCodes.conflict) {
+        throw new ConflictException('Category already exists');
+      }
+
       throw error;
     }
   }
