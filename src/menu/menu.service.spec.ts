@@ -4,8 +4,6 @@ import { prismaService } from 'src/utils/prisma-service-test';
 import { CategoriesFactory } from 'src/categories/factorires/categories.factory';
 import { ConfigModule } from '@nestjs/config';
 import { cleanDB } from 'src/utils/clean-db';
-import { Categories } from '@prisma/client';
-import { faker } from '@faker-js/faker';
 import { MenuService } from './menu.service';
 import { ProductsFactory } from 'src/products/factories/products.factory';
 
@@ -49,7 +47,7 @@ describe('ProductsService', () => {
 
   describe('When no products are created', () => {
     it('when calling findOne, it should return an object with emprty categories array and empty products array', async () => {
-      const result = await service.findOne();
+      const result = await service.findAll();
       expect(result).toEqual({
         categories: [],
         products: [],
@@ -64,7 +62,7 @@ describe('ProductsService', () => {
       });
     });
     it('when calling findOne, it should return an object with an array of categories and an array of products', async () => {
-      const result = await service.findOne();
+      const result = await service.findAll();
 
       expect(result).toEqual({
         categories: expect.any(Array),

@@ -6,7 +6,7 @@ import { Menu } from './entities/menu.entity';
 export class MenuService {
   constructor(private readonly prismaService: PrismaService) {}
 
-  async findOne(): Promise<Menu> {
+  async findAll(): Promise<Menu> {
     const date = new Date();
     const isNight = date.getHours() >= 18;
 

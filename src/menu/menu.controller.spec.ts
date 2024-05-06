@@ -25,12 +25,12 @@ describe('MenuController', () => {
 
   describe('When calling findOne', () => {
     it('should call categoriesService findOne', async () => {
-      await controller.findOne();
+      await controller.findAll();
       expect(mockMenuService.findOne).toHaveBeenCalled();
     });
 
     it('should return an object with categories and products', async () => {
-      const result = await controller.findOne();
+      const result = await controller.findAll();
       expect(result).toHaveProperty('categories');
       expect(result).toHaveProperty('products');
     });
