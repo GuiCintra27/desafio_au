@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma/prisma.service';
 import { Menu } from './entities/menu.entity';
+import { ProductsData } from 'src/products/models/products.model';
 
 @Injectable()
 export class MenuService {
@@ -43,5 +44,32 @@ export class MenuService {
     };
 
     return result;
+  }
+
+  async findCategoryProducts({
+    categoryId,
+  }: {
+    categoryId: number;
+  }): Promise<ProductsData[]> {
+    const date = new Date();
+    const isNight = date.getHours() >= 18;
+
+    const products = await this.prismaService.products.findMany({
+      where: {
+        category_id: categoryId,
+        OR: [{ day_shift: isNight ? 'NIGHT' : 'DAY' }, { day_shift: 'ALL' }],
+      },
+      select: {
+        id: true,
+        name: true,
+        price: true,
+        description: true,
+        category_id: true,
+        image_url: true,
+        day_shift: true,
+      },
+    });
+
+    return products;
   }
 }
