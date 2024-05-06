@@ -9,9 +9,9 @@ POST http://localhost:{{port}}/categories
 Content-Type: application/json
 
 {
-    "name": "Combo",
+    "name": "CAFÉS",
     "image_url": "https://img77.uenicdn.com/image/upload/v1571152283/service_images/shutterstock_792219154.jpg",
-    "day_shift": "ALL"
+    "day_shift": "DAY"
 }
 
 ###
@@ -55,12 +55,12 @@ POST http://localhost:{{port}}/products/
 Content-Type: application/json
 
 {
-    "name": "Smash da casa 2",
+    "name": "Cappuccino",
     "price": 14.90,
-    "description": "2x hambúrguer 200g, queijo cheddar, tomate, alface, picles, cebola e molho da casa",
+    "description": "Café",
     "image_url": "https://t2.gstatic.com/licensed-image?q=tbn:ANd9GcRRto3IlY56MlAIOAvXHvPEVxBDVzG1uz1zULEBYdJ-I4Aa-xOyPEVvv7fmIjLnxaOz",
-    "day_shift": "ALL",
-    "category_id": 7
+    "day_shift": "DAY",
+    "category_id": 9
 }
 
 ###
@@ -68,14 +68,19 @@ PUT http://localhost:{{port}}/products/{{product_id}}
 Content-Type: application/json
 
 {
-    "name": "Smash da casa",
-    "price": 14.90,
-    "description": "2x hambúrguer 200g, queijo cheddar, tomate, alface, picles, cebola e molho da casa",
+    "name": "Mojito",
+    "price": 18.90,
+    "description": "Drink de limão",
     "image_url": "https://t2.gstatic.com/licensed-image?q=tbn:ANd9GcRRto3IlY56MlAIOAvXHvPEVxBDVzG1uz1zULEBYdJ-I4Aa-xOyPEVvv7fmIjLnxaOz",
-    "day_shift": "ALL",
-    "category_id": 7
+    "day_shift": "NIGHT",
+    "category_id": 8
 }
 
 ###
 DELETE http://localhost:{{port}}/products/4
 
+
+
+### MENU ###
+
+GET http://localhost:{{port}}/menu

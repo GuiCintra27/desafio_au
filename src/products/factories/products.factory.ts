@@ -34,7 +34,7 @@ export class ProductsFactory {
     repeatCategory?: { quantity: number };
     repeatName?: { quantity: number };
   }): Promise<ProductsData[]> {
-    await this.categoriesFactory.createMany(4);
+    await this.categoriesFactory.createMany(quantity);
 
     const categories: Omit<Categories, 'created_at' | 'updated_at'>[] =
       await this.categoriesFactory.findMany();
