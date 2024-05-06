@@ -79,12 +79,20 @@ export class MenuService {
         },
       });
 
-      return products;
-    } catch (error) {
-      if (error.code === prismaErrorCodes.notFound) {
-        throw new NotFoundException('Category not found');
+      if (products.length === 0) {
+        const category = await this.prismaService.categories.findUnique({
+          where: {
+            id: categoryId,
+          },
+        });
+
+        if (!category) {
+          throw new NotFoundException('Category not found');
+        }
       }
 
+      return products;
+    } catch (error) {
       throw error;
     }
   }

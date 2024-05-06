@@ -35,7 +35,6 @@ export class MenuController {
     { id: categoryId }: MenuParamsDto,
   ): Promise<ProductsData[]> {
     try {
-      console.log(categoryId);
       const result = await this.menuService.findCategoryProducts({
         categoryId,
       });
