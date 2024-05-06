@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, HttpException } from '@nestjs/common';
 import { MenuService } from './menu.service';
 import { Menu } from './entities/menu.entity';
 import { ProductsData } from 'src/products/models/products.model';
@@ -8,16 +8,32 @@ export class MenuController {
   constructor(private readonly menuService: MenuService) {}
 
   @Get()
-  findAll(): Promise<Menu> {
-    return this.menuService.findAll();
+  async findAll(): Promise<Menu> {
+    try {
+      const result = await this.menuService.findAll();
+      return result;
+    } catch (error) {
+      throw new Error(error);
+    }
   }
 
   @Get('category/:categoryId')
-  findCategoryProducts({
+  async findCategoryProducts({
     categoryId,
   }: {
     categoryId: number;
   }): Promise<ProductsData[]> {
-    return this.menuService.findCategoryProducts({ categoryId });
+    try {
+      const result = await this.menuService.findCategoryProducts({
+        categoryId,
+      });
+
+      return result;
+    } catch (error) {
+      if (error instanceof HttpException) {
+        throw error;
+      }
+      throw new Error(error);
+    }
   }
 }
