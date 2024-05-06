@@ -23,16 +23,28 @@ describe('MenuController', () => {
     expect(controller).toBeDefined();
   });
 
-  describe('When calling findOne', () => {
+  describe('When calling findAll', () => {
     it('should call categoriesService findOne', async () => {
       await controller.findAll();
-      expect(mockMenuService.findOne).toHaveBeenCalled();
+      expect(mockMenuService.findAll).toHaveBeenCalled();
     });
 
     it('should return an object with categories and products', async () => {
       const result = await controller.findAll();
       expect(result).toHaveProperty('categories');
       expect(result).toHaveProperty('products');
+    });
+  });
+
+  describe('When calling findCategoryProducts', () => {
+    it('should call categoriesService findCategoryProducts', async () => {
+      await controller.findCategoryProducts({ categoryId: 1 });
+      expect(mockMenuService.findCategoryProducts).toHaveBeenCalled();
+    });
+
+    it('should return an array', async () => {
+      const result = await controller.findCategoryProducts({ categoryId: 1 });
+      expect(result).toBeInstanceOf(Array);
     });
   });
 });

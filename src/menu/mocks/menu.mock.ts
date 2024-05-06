@@ -1,8 +1,11 @@
 export const mockMenuService = {
-  findOne: jest.fn().mockImplementation(() => {
+  findAll: jest.fn().mockImplementation(() => {
     return {
       categories: [],
       products: [],
     };
+  }),
+  findCategoryProducts: jest.fn().mockImplementation(() => {
+    return [];
   }),
 };
