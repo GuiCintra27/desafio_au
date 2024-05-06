@@ -38,12 +38,12 @@ describe('MenuController', () => {
 
   describe('When calling findCategoryProducts', () => {
     it('should call categoriesService findCategoryProducts', async () => {
-      await controller.findCategoryProducts({ categoryId: 1 });
+      await controller.findCategoryProducts({ id: 1 });
       expect(mockMenuService.findCategoryProducts).toHaveBeenCalled();
     });
 
     it('should return an array', async () => {
-      const result = await controller.findCategoryProducts({ categoryId: 1 });
+      const result = await controller.findCategoryProducts({ id: 1 });
       expect(result).toBeInstanceOf(Array);
     });
   });
