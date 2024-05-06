@@ -58,8 +58,15 @@ export class MenuService {
 
       const products = await this.prismaService.products.findMany({
         where: {
-          category_id: categoryId,
-          OR: [{ day_shift: isNight ? 'NIGHT' : 'DAY' }, { day_shift: 'ALL' }],
+          AND: [
+            { category_id: categoryId },
+            {
+              OR: [
+                { day_shift: isNight ? 'NIGHT' : 'DAY' },
+                { day_shift: 'ALL' },
+              ],
+            },
+          ],
         },
         select: {
           id: true,

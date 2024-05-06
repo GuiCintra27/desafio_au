@@ -1,7 +1,14 @@
-import { Controller, Get, HttpException } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  HttpException,
+  Param,
+  ValidationPipe,
+} from '@nestjs/common';
 import { MenuService } from './menu.service';
 import { Menu } from './entities/menu.entity';
 import { ProductsData } from 'src/products/models/products.model';
+import { MenuParamsDto } from './dto/menu-params.dto';
 
 @Controller('menu')
 export class MenuController {
@@ -17,13 +24,18 @@ export class MenuController {
     }
   }
 
-  @Get('category/:categoryId')
-  async findCategoryProducts({
-    categoryId,
-  }: {
-    categoryId: number;
-  }): Promise<ProductsData[]> {
+  @Get('category/:id')
+  async findCategoryProducts(
+    @Param(
+      new ValidationPipe({
+        transform: true,
+        transformOptions: { enableImplicitConversion: true },
+      }),
+    )
+    { id: categoryId }: MenuParamsDto,
+  ): Promise<ProductsData[]> {
     try {
+      console.log(categoryId);
       const result = await this.menuService.findCategoryProducts({
         categoryId,
       });
