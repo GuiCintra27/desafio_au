@@ -54,13 +54,13 @@ describe('CategoriesService', () => {
     });
 
     it('when calling update, it should throw an error', async () => {
-      await expect(service.update(1, factory.createDTO(1)[0])).rejects.toThrow(
-        'Category not found',
-      );
+      await expect(
+        service.update('1', factory.createDTO(1)[0]),
+      ).rejects.toThrow('Category not found');
     });
 
     it('when calling delete, it should throw an error', async () => {
-      await expect(service.delete(1)).rejects.toThrow('Category not found');
+      await expect(service.delete('1')).rejects.toThrow('Category not found');
     });
 
     it('when calling create, it should create a category', async () => {
@@ -71,7 +71,7 @@ describe('CategoriesService', () => {
 
   describe('When categories are created', () => {
     const categoryQuantity = 4;
-    let categories: { id: number }[] & CreateCategoryDto[];
+    let categories: { id: string }[] & CreateCategoryDto[];
     it('when calling findAll, it should return an array with all categories', async () => {
       await cleanDB();
       await factory.createMany(categoryQuantity);

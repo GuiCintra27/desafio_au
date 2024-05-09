@@ -1,9 +1,7 @@
-import { Type } from 'class-transformer';
-import { IsInt, IsOptional } from 'class-validator';
+import { IsOptional, Matches } from 'class-validator';
 
 export class ParamUpdateCategoryDto {
   @IsOptional()
-  @Type(() => Number)
-  @IsInt()
-  public readonly id: number;
+  @Matches(/^[0-9a-fA-F]{24}$/)
+  public readonly id?: string;
 }

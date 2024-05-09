@@ -51,13 +51,13 @@ describe('CategoriesController', () => {
 
   describe('When calling update', () => {
     it('should call categoriesService update', async () => {
-      await controller.update({ id: 1 }, categoriesFactory.createDTO(1)[0]);
+      await controller.update({ id: '1' }, categoriesFactory.createDTO(1)[0]);
       expect(mockCategoriesService.update).toHaveBeenCalled();
     });
 
     it('should return undefined', async () => {
       const result = await controller.update(
-        { id: 1 },
+        { id: '1' },
         categoriesFactory.createDTO(1)[0],
       );
       expect(result).toBeUndefined();
@@ -66,12 +66,12 @@ describe('CategoriesController', () => {
 
   describe('When calling delete', () => {
     it('should call categoriesService delete', async () => {
-      await controller.delete({ id: 1 });
+      await controller.delete({ id: '1' });
       expect(mockCategoriesService.delete).toHaveBeenCalled();
     });
 
     it('should return undefined', async () => {
-      const result = await controller.delete({ id: 1 });
+      const result = await controller.delete({ id: '1' });
       expect(result).toBeUndefined();
     });
   });

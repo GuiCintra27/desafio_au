@@ -57,7 +57,7 @@ describe('ProductsService', () => {
 
     it('when calling findCategoryProducts, it should throw an error', async () => {
       await expect(
-        service.findCategoryProducts({ categoryId: 1 }),
+        service.findCategoryProducts({ categoryId: '1' }),
       ).rejects.toThrow('Category not found');
     });
   });

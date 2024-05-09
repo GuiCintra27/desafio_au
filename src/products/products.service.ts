@@ -28,7 +28,7 @@ export class ProductsService {
     return products;
   }
 
-  public async findById({ id }: { id: number }): Promise<ProductsData> {
+  public async findById({ id }: { id: string }): Promise<ProductsData> {
     try {
       const product = await this.prismaService.products.findUnique({
         where: {
@@ -58,7 +58,7 @@ export class ProductsService {
   public async findByCategoryId({
     categoryId,
   }: {
-    categoryId: number;
+    categoryId: string;
   }): Promise<ProductsData[]> {
     const products = await this.prismaService.products.findMany({
       where: {
@@ -105,7 +105,7 @@ export class ProductsService {
     categoryId,
   }: {
     name: string;
-    categoryId: number;
+    categoryId: string;
   }): Promise<ProductsData[]> {
     const products = await this.prismaService.products.findMany({
       where: {
@@ -143,7 +143,7 @@ export class ProductsService {
     }
   }
 
-  async update(id: number, data: CreateProductsDto): Promise<void> {
+  async update(id: string, data: CreateProductsDto): Promise<void> {
     try {
       await this.prismaService.products.update({
         where: { id },
@@ -162,7 +162,7 @@ export class ProductsService {
     }
   }
 
-  async delete(id: number): Promise<void> {
+  async delete(id: string): Promise<void> {
     try {
       await this.prismaService.products.delete({
         where: { id },

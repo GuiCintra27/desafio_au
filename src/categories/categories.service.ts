@@ -13,7 +13,7 @@ import { Categories } from '@prisma/client';
 export class CategoriesService {
   constructor(private prismaService: PrismaService) {}
 
-  async findAll(): Promise<{ id: number }[] & CreateCategoryDto[]> {
+  async findAll(): Promise<{ id: string }[] & CreateCategoryDto[]> {
     const categories = await this.prismaService.categories.findMany({
       select: { id: true, name: true, image_url: true, day_shift: true },
     });
@@ -34,7 +34,7 @@ export class CategoriesService {
     }
   }
 
-  async update(id: number, data: CreateCategoryDto): Promise<void> {
+  async update(id: string, data: CreateCategoryDto): Promise<void> {
     try {
       await this.prismaService.categories.update({
         where: { id },
@@ -53,7 +53,7 @@ export class CategoriesService {
     }
   }
 
-  async delete(id: number): Promise<void> {
+  async delete(id: string): Promise<void> {
     try {
       await this.prismaService.categories.delete({
         where: { id },

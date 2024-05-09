@@ -1,11 +1,11 @@
 import { Type } from 'class-transformer';
 import {
   IsIn,
-  IsInt,
   IsNotEmpty,
   IsNumber,
   IsString,
   IsUrl,
+  Matches,
 } from 'class-validator';
 
 export class CreateProductsDto {
@@ -21,9 +21,9 @@ export class CreateProductsDto {
   @IsNotEmpty()
   description: string;
 
-  @IsInt()
+  @Matches(/^[0-9a-fA-F]{24}$/)
   @IsNotEmpty()
-  category_id: number;
+  category_id: string;
 
   @IsUrl()
   @IsNotEmpty()

@@ -52,19 +52,19 @@ describe('ProductsController', () => {
 
       describe('if categoryId is given', () => {
         it('It should call productsService findByCategoryId', () => {
-          controller.findAll({ category_id: 1 });
+          controller.findAll({ category_id: '1' });
           expect(mockProductsService.findByCategoryId).toHaveBeenCalled();
         });
 
         it('It should return an array', async () => {
-          const result = await controller.findAll({ category_id: 1 });
+          const result = await controller.findAll({ category_id: '1' });
           expect(result).toBeInstanceOf(Array);
         });
       });
 
       describe('if name and categoryId are given', () => {
         it('It should call productsService findByNameAndCategoryId', () => {
-          controller.findAll({ name: 'test', category_id: 1 });
+          controller.findAll({ name: 'test', category_id: '1' });
           expect(
             mockProductsService.findByNameAndCategoryId,
           ).toHaveBeenCalled();
@@ -73,7 +73,7 @@ describe('ProductsController', () => {
         it('It should return an array', async () => {
           const result = await controller.findAll({
             name: 'test',
-            category_id: 1,
+            category_id: '1',
           });
           expect(result).toBeInstanceOf(Array);
         });
@@ -83,12 +83,12 @@ describe('ProductsController', () => {
 
   describe('When calling findOne', () => {
     it('if id is given, it should call productsService findById', () => {
-      controller.findOne({ id: 1 });
+      controller.findOne({ id: '1' });
       expect(mockProductsService.findById).toHaveBeenCalled();
     });
 
     it('if id is given, it should return an object', async () => {
-      const result = await controller.findOne({ id: 1 });
+      const result = await controller.findOne({ id: '1' });
       expect(result).toBeInstanceOf(Object);
     });
   });
@@ -107,13 +107,13 @@ describe('ProductsController', () => {
 
   describe('When calling update', () => {
     it('should call productsService update', () => {
-      controller.update({ id: 1 }, factory.createDTO(1)[0]);
+      controller.update({ id: '1' }, factory.createDTO(1)[0]);
       expect(mockProductsService.update).toHaveBeenCalled();
     });
 
     it('should return undefined', async () => {
       const result = await controller.update(
-        { id: 1 },
+        { id: '1' },
         factory.createDTO(1)[0],
       );
       expect(result).toBeUndefined();
@@ -122,12 +122,12 @@ describe('ProductsController', () => {
 
   describe('When calling delete', () => {
     it('should call productsService delete', () => {
-      controller.delete({ id: 1 });
+      controller.delete({ id: '1' });
       expect(mockProductsService.delete).toHaveBeenCalled();
     });
 
     it('should return undefined', async () => {
-      const result = await controller.delete({ id: 1 });
+      const result = await controller.delete({ id: '1' });
       expect(result).toBeUndefined();
     });
   });

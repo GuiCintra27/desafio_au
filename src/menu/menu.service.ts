@@ -50,7 +50,7 @@ export class MenuService {
   async findCategoryProducts({
     categoryId,
   }: {
-    categoryId: number;
+    categoryId: string;
   }): Promise<ProductsData[]> {
     try {
       const date = new Date();

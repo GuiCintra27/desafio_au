@@ -57,7 +57,7 @@ describe('ProductsService', () => {
     });
 
     it('when calling findById, it should throw an error', async () => {
-      await expect(service.findById({ id: 1 })).rejects.toThrow(
+      await expect(service.findById({ id: '1' })).rejects.toThrow(
         'Product not found',
       );
     });
@@ -77,7 +77,7 @@ describe('ProductsService', () => {
     it('when calling findByNameAndCategoryId, it should return an empty array', async () => {
       const result = await service.findByNameAndCategoryId({
         name: 'Product 1',
-        categoryId: 1,
+        categoryId: '1',
       });
       expect(result).toEqual([]);
     });
@@ -87,7 +87,7 @@ describe('ProductsService', () => {
       categories = await categoryFactory.findMany();
 
       await expect(
-        service.update(1, {
+        service.update('1', {
           ...factory.createDTO(1)[0],
           category_id: categories[0].id,
         }),
@@ -95,7 +95,7 @@ describe('ProductsService', () => {
     });
 
     it('when calling delete, it should throw an error', async () => {
-      await expect(service.delete(1)).rejects.toThrow('Product not found');
+      await expect(service.delete('1')).rejects.toThrow('Product not found');
     });
 
     it('when calling create, it should create a product', async () => {

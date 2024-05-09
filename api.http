@@ -10,7 +10,7 @@ Content-Type: application/json
 
 {
     "name": "CAFÉS",
-    "image_url": "https://img77.uenicdn.com/image/upload/v1571152283/service_images/shutterstock_792219154.jpg",
+    "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Cappuccino_at_Sightglass_Coffee.jpg/1200px-Cappuccino_at_Sightglass_Coffee.jpg",
     "day_shift": "DAY"
 }
 
@@ -60,7 +60,7 @@ Content-Type: application/json
     "description": "Café",
     "image_url": "https://t2.gstatic.com/licensed-image?q=tbn:ANd9GcRRto3IlY56MlAIOAvXHvPEVxBDVzG1uz1zULEBYdJ-I4Aa-xOyPEVvv7fmIjLnxaOz",
     "day_shift": "DAY",
-    "category_id": 9
+    "category_id": "663d0590af69e600113e4cb9"
 }
 
 ###

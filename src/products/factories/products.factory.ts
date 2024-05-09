@@ -17,7 +17,7 @@ export class ProductsFactory {
         name: faker.person.firstName(),
         description: faker.lorem.sentence(),
         price: faker.number.float({ fractionDigits: 2 }),
-        category_id: faker.number.int(),
+        category_id: faker.database.mongodbObjectId(),
         image_url: faker.image.url(),
         day_shift: faker.helpers.arrayElement(['ALL', 'DAY', 'NIGHT']),
       });
@@ -59,7 +59,7 @@ export class ProductsFactory {
       }
 
       products.push({
-        id: i,
+        id: faker.database.mongodbObjectId(),
         name,
         description: faker.lorem.sentence(),
         price: faker.number.int({ min: 1, max: 100 }),

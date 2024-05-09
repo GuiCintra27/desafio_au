@@ -6,12 +6,12 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mongodb"
   url      = env("DATABASE_URL")
 }
 
 model Categories {
-  id         Int        @id @default(autoincrement())
+  id         String     @id @default(auto()) @map("_id") @db.ObjectId
   name       String     @unique
   image_url  String
   day_shift  DayShift
@@ -23,11 +23,11 @@ model Categories {
 }
 
 model Products {
-  id          Int        @id @default(autoincrement())
+  id          String     @id @default(auto()) @map("_id") @db.ObjectId
   name        String     @unique
   image_url   String
   description String
-  category_id Int
+  category_id String     @unique @db.ObjectId
   price       Float
   day_shift   DayShift
   created_at  DateTime   @default(now())

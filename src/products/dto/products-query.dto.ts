@@ -1,11 +1,9 @@
-import { Type } from 'class-transformer';
-import { IsInt, IsOptional, IsString } from 'class-validator';
+import { IsOptional, IsString, Matches } from 'class-validator';
 
 export class ProductsQueryDto {
   @IsOptional()
-  @Type(() => Number)
-  @IsInt()
-  public readonly category_id?: number;
+  @Matches(/^[0-9a-fA-F]{24}$/)
+  public readonly category_id?: string;
 
   @IsOptional()
   @IsString()
