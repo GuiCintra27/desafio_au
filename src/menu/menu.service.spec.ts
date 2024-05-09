@@ -7,6 +7,7 @@ import { cleanDB } from 'src/utils/clean-db';
 import { MenuService } from './menu.service';
 import { ProductsFactory } from 'src/products/factories/products.factory';
 import { Categories, Products } from '@prisma/client';
+import { faker } from '@faker-js/faker';
 
 describe('ProductsService', () => {
   let service: MenuService;
@@ -57,7 +58,9 @@ describe('ProductsService', () => {
 
     it('when calling findCategoryProducts, it should throw an error', async () => {
       await expect(
-        service.findCategoryProducts({ categoryId: '1' }),
+        service.findCategoryProducts({
+          categoryId: faker.database.mongodbObjectId(),
+        }),
       ).rejects.toThrow('Category not found');
     });
   });
