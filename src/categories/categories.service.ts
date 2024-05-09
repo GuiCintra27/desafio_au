@@ -23,20 +23,25 @@ export class CategoriesService {
   async create(data: CreateCategoryDto): Promise<Categories> {
     //I decided to carry out the validation this way, as fewer requests are made to the database
     try {
+      const category = await this.prismaService.categories.findUnique({
+        where: { name: data.name },
+      });
+
+      if (category) {
+        throw new ConflictException('Category already exists');
+      }
+
       return await this.prismaService.categories.create({
         data,
       });
     } catch (error) {
-      if (error.code === prismaErrorCodes.conflict) {
-        throw new ConflictException('Category already exists');
-      }
       throw error;
     }
   }
 
   async update(id: string, data: CreateCategoryDto): Promise<void> {
     try {
-      const category = await this.prismaService.categories.findUnique({
+      let category = await this.prismaService.categories.findUnique({
         where: { id },
       });
 
@@ -44,15 +49,19 @@ export class CategoriesService {
         throw new NotFoundException('Category not found');
       }
 
+      category = await this.prismaService.categories.findUnique({
+        where: { name: data.name },
+      });
+
+      if (category && category.id !== id) {
+        throw new ConflictException('Category already exists');
+      }
+
       await this.prismaService.categories.update({
         where: { id },
         data,
       });
     } catch (error) {
-      if (error.code === prismaErrorCodes.conflict) {
-        throw new ConflictException('Category already exists');
-      }
-
       throw error;
     }
   }

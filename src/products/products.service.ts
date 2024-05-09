@@ -130,48 +130,66 @@ export class ProductsService {
   }
 
   async create(data: CreateProductsDto): Promise<Products> {
-    //I decided to carry out the validation this way, as fewer requests are made to the database
     try {
+      const product = await this.prismaService.products.findUnique({
+        where: {
+          name: data.name,
+        },
+      });
+
+      if (product) {
+        throw new ConflictException('Product already exists');
+      }
+
       return await this.prismaService.products.create({
         data,
       });
     } catch (error) {
-      if (error.code === prismaErrorCodes.conflict) {
-        throw new ConflictException('Product already exists');
-      }
       throw error;
     }
   }
 
   async update(id: string, data: CreateProductsDto): Promise<void> {
     try {
+      let product = await this.prismaService.products.findUnique({
+        where: { id },
+      });
+
+      if (!product) {
+        throw new NotFoundException('Product not found');
+      }
+
+      product = await this.prismaService.products.findUnique({
+        where: { name: data.name },
+      });
+
+      if (product && product.id !== id) {
+        throw new ConflictException('Product already exists');
+      }
+
       await this.prismaService.products.update({
         where: { id },
         data,
       });
     } catch (error) {
-      if (error.code === prismaErrorCodes.notFound) {
-        throw new NotFoundException('Product not found');
-      }
-
-      if (error.code === prismaErrorCodes.conflict) {
-        throw new ConflictException('Product already exists');
-      }
-
       throw error;
     }
   }
 
   async delete(id: string): Promise<void> {
     try {
+      const product = await this.prismaService.products.findUnique({
+        where: { id },
+      });
+
+      if (!product) {
+        throw new NotFoundException('Product not found');
+      }
+
       await this.prismaService.products.delete({
         where: { id },
       });
     } catch (error) {
-      if (error.code === prismaErrorCodes.notFound) {
-        throw new NotFoundException('Product not found');
-      }
-
       throw error;
     }
   }

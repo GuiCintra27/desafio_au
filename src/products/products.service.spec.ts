@@ -57,9 +57,9 @@ describe('ProductsService', () => {
     });
 
     it('when calling findById, it should throw an error', async () => {
-      await expect(service.findById({ id: '1' })).rejects.toThrow(
-        'Product not found',
-      );
+      await expect(
+        service.findById({ id: faker.database.mongodbObjectId() }),
+      ).rejects.toThrow('Product not found');
     });
 
     it('when calling findByCategoryId, it should return an empty array', async () => {
@@ -77,7 +77,7 @@ describe('ProductsService', () => {
     it('when calling findByNameAndCategoryId, it should return an empty array', async () => {
       const result = await service.findByNameAndCategoryId({
         name: 'Product 1',
-        categoryId: '1',
+        categoryId: faker.database.mongodbObjectId(),
       });
       expect(result).toEqual([]);
     });
@@ -87,7 +87,7 @@ describe('ProductsService', () => {
       categories = await categoryFactory.findMany();
 
       await expect(
-        service.update('1', {
+        service.update(faker.database.mongodbObjectId(), {
           ...factory.createDTO(1)[0],
           category_id: categories[0].id,
         }),
@@ -95,7 +95,9 @@ describe('ProductsService', () => {
     });
 
     it('when calling delete, it should throw an error', async () => {
-      await expect(service.delete('1')).rejects.toThrow('Product not found');
+      await expect(
+        service.delete(faker.database.mongodbObjectId()),
+      ).rejects.toThrow('Product not found');
     });
 
     it('when calling create, it should create a product', async () => {
@@ -172,7 +174,16 @@ describe('ProductsService', () => {
     describe('when calling update', () => {
       it('should update a product', async () => {
         const newName = faker.person.firstName();
-        await service.update(products[0].id, { ...products[0], name: newName });
+        const { description, price, image_url, category_id, day_shift } =
+          products[0];
+        await service.update(products[0].id, {
+          name: newName,
+          description,
+          price,
+          image_url,
+          category_id,
+          day_shift,
+        });
 
         const result = await service.findById({ id: products[0].id });
 
