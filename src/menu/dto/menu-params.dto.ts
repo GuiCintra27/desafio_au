@@ -1,7 +1,7 @@
-import { IsOptional, Matches } from 'class-validator';
+import { IsMongoId, IsOptional } from 'class-validator';
 
 export class MenuParamsDto {
   @IsOptional()
-  @Matches(/^[0-9a-fA-F]{24}$/)
+  @IsMongoId()
   public readonly id?: string;
 }

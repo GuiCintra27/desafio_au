@@ -1,11 +1,11 @@
 import { Type } from 'class-transformer';
 import {
   IsIn,
+  IsMongoId,
   IsNotEmpty,
   IsNumber,
   IsString,
   IsUrl,
-  Matches,
 } from 'class-validator';
 
 export class CreateProductsDto {
@@ -21,7 +21,7 @@ export class CreateProductsDto {
   @IsNotEmpty()
   description: string;
 
-  @Matches(/^[0-9a-fA-F]{24}$/)
+  @IsMongoId()
   @IsNotEmpty()
   category_id: string;
 

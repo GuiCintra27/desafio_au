@@ -15,7 +15,7 @@ Content-Type: application/json
 }
 
 ###
-@category_id=1
+@category_id=663d29afa9e8ebcfb732f920
 
 PUT http://localhost:{{port}}/categories/{{category_id}}
 Content-Type: application/json
@@ -32,7 +32,7 @@ DELETE http://localhost:{{port}}/categories/{{category_id}}
 
 @name=smash da casa
 
-@product_id=1
+@product_id="663d0590af69e600113e4cb9"
 
 ### PRODUCTS ###
 

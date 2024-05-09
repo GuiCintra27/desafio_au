@@ -36,15 +36,21 @@ export class CategoriesService {
 
   async update(id: string, data: CreateCategoryDto): Promise<void> {
     try {
+      const category = await this.prismaService.categories.findUnique({
+        where: { id },
+      });
+
+      console.log(category);
+
+      if (!category) {
+        throw new NotFoundException('Category not found');
+      }
+
       await this.prismaService.categories.update({
         where: { id },
         data,
       });
     } catch (error) {
-      if (error.code === prismaErrorCodes.notFound) {
-        throw new NotFoundException('Category not found');
-      }
-
       if (error.code === prismaErrorCodes.conflict) {
         throw new ConflictException('Category already exists');
       }
@@ -55,13 +61,18 @@ export class CategoriesService {
 
   async delete(id: string): Promise<void> {
     try {
+      const category = await this.prismaService.categories.findUnique({
+        where: { id },
+      });
+
+      if (!category) {
+        throw new NotFoundException('Category not found');
+      }
+
       await this.prismaService.categories.delete({
         where: { id },
       });
     } catch (error) {
-      if (error.code === prismaErrorCodes.notFound) {
-        throw new NotFoundException('Category not found');
-      }
       throw error;
     }
   }
