@@ -6,6 +6,7 @@ import { CategoriesFactory } from './factorires/categories.factory';
 import { cleanDB } from 'src/utils/clean-db';
 import { ConfigModule } from '@nestjs/config';
 import { CreateCategoryDto } from './dto/create-category.dto';
+import { faker } from '@faker-js/faker';
 
 describe('CategoriesService', () => {
   let service: CategoriesService;
@@ -55,12 +56,17 @@ describe('CategoriesService', () => {
 
     it('when calling update, it should throw an error', async () => {
       await expect(
-        service.update('1', factory.createDTO(1)[0]),
+        service.update(
+          faker.database.mongodbObjectId(),
+          factory.createDTO(1)[0],
+        ),
       ).rejects.toThrow('Category not found');
     });
 
     it('when calling delete, it should throw an error', async () => {
-      await expect(service.delete('1')).rejects.toThrow('Category not found');
+      await expect(
+        service.delete(faker.database.mongodbObjectId()),
+      ).rejects.toThrow('Category not found');
     });
 
     it('when calling create, it should create a category', async () => {

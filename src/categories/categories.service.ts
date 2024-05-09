@@ -40,8 +40,6 @@ export class CategoriesService {
         where: { id },
       });
 
-      console.log(category);
-
       if (!category) {
         throw new NotFoundException('Category not found');
       }
