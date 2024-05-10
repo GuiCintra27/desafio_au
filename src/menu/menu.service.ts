@@ -10,7 +10,7 @@ export class MenuService {
 
   async findAll(): Promise<Menu> {
     const date = new Date();
-    const isNight = date.getHours() >= 18;
+    const isNight = date.getHours() >= 18 || date.getHours() < 6;
 
     const categories = await this.prismaService.categories.findMany({
       where: {
