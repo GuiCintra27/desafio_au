@@ -95,7 +95,7 @@ Este projeto usa uma variável de ambiente, verifique o arquivo .env.example par
 2. Instale as dependências do projeto
 
 ```bash
-npx prisma generate
+npm i
 ```
 
 3. Gere o prisma client (não esqueça de preencher as variáveis de ambiente)
